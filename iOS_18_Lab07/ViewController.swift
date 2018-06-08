@@ -36,14 +36,14 @@ class ViewController: UIViewController,UITableViewDataSource,UITableViewDelegate
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         let task = URLSession.shared.dataTask(with: request) { [unowned self](data, response, error) in
             
-            if let errore = error {
-                // visualizzo messaggio di errore
-                
-                return
-            }
+            
             do {
+                if let error = error {
+                    throw error
+                }
+                if let data = data {
                 // converto i dati ricevuti in oggetto
-                let object = try JSONSerialization.jsonObject(with: data!, options: JSONSerialization.ReadingOptions.allowFragments)
+                    let object = try JSONSerialization.jsonObject(with: data, options: JSONSerialization.ReadingOptions.allowFragments)
                 let dictionary = object as? [Utente:Any]
                 
                 // leggo il parametro "data" e faccio il cast ad array
@@ -54,6 +54,7 @@ class ViewController: UIViewController,UITableViewDataSource,UITableViewDelegate
                     // effettuo il caricamento della tabella nel thread main
                     // self.tableView.reloadData()
                 }
+             }
             }
             catch {
                 DispatchQueue.main.async {

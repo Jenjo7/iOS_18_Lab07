@@ -24,4 +24,8 @@ class Utente {
         self.nummber = number
         self.path = path
     }
+    
+//    init(data : [StringAny]) {
+//        self.init(data["age" as! age ])
+//    }
 }
