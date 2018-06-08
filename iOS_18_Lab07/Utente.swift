@@ -15,11 +15,13 @@ class Utente {
     var surname : String
     var age : Int
     var nummber : String
+    var path : String
     
-    init(name : String, age :Int, surname : String, number : String ) {
+    init(name : String, age :Int, surname : String, number : String, path : String ) {
         self.name = name
         self.surname = surname
         self.age = age
         self.nummber = number
+        self.path = path
     }
 }

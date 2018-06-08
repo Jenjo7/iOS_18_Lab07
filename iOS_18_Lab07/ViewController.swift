@@ -41,10 +41,34 @@ class ViewController: UIViewController,UITableViewDataSource,UITableViewDelegate
                 
                 return
             }
+            do {
+                // converto i dati ricevuti in oggetto
+                let object = try JSONSerialization.jsonObject(with: data!, options: JSONSerialization.ReadingOptions.allowFragments)
+                let dictionary = object as? [Utente:Any]
+                
+                // leggo il parametro "data" e faccio il cast ad array
+                let dati = dictionary!["data"] as? Array<[String:Any]>
+                self.lista = dati ?? []
+                
+                DispatchQueue.main.async {
+                    // effettuo il caricamento della tabella nel thread main
+                    // self.tableView.reloadData()
+                }
+            }
+            catch {
+                DispatchQueue.main.async {
+                    // visualizzazio il messaggio di errore nel thread main
+                    let alert = UIAlertController(title: "Errore", message: "Errore nel caricamento dei dati", preferredStyle: .alert)
+                    alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
+                    self.present(alert, animated: true, completion: nil)
+                }
+            }
+        }
+        task.resume()
             
     }
 }
 
 
-}
+
 
