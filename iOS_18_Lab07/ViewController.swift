@@ -8,7 +8,20 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+// http://demoweb.labinfo.net/univ/utenti.php
+
+class ViewController: UIViewController,UITableViewDataSource,UITableViewDelegate {
+    
+    var users : [Utente] = []
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        <#code#>
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        <#code#>
+    }
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -17,8 +30,20 @@ class ViewController: UIViewController {
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+        let url = URL(string: "http://demoweb.labinfo.net/univ/utenti.php")!
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        let task = URLSession.shared.dataTask(with: request) { [unowned self](data, response, error) in
+            
+            if let errore = error {
+                // visualizzo messaggio di errore
+                
+                return
+            }
+            
     }
+}
 
 
 }
